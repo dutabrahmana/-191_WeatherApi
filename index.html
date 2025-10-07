@@ -49,4 +49,24 @@
 
                     l.innerHTML = nama;
                     v.innerHTML = `
-                    
+                        
+                        <p><b>Suhu (°C):</b> ${suhuC}°C</p>
+                        <p><b>Suhu (°F):</b> ${suhuF}°F</p>
+                        <p><b>Kelembapan:</b> ${kelembapan}%</p>
+                      
+                        <p><b>Negara:</b> ${negara}</p>
+                        <p><b>Provinsi:</b> ${provinsi}</p>
+                        <p><b>Kecamatan:</b> ${kecamatan}</p>
+                        <p><b>Longitude:</b> ${lon}</p>
+                        <p><b>Latitude:</b> ${lat}</p>
+                        <img src="${icon}" alt="ikon cuaca">
+                    `;
+                },
+                error: function(error){
+                    console.log(error);
+                    document.getElementById("tampilan").innerHTML = `<p>❌ Kota tidak ditemukan.</p>`;
+                }
+            });
+        }
+
+       
