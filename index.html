@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuaca</title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <h2>🌤️ Informasi Cuaca</h2>
+
+    <label>Masukkan Nama Kota: </label>
+    <input type="text" id="inputKota" placeholder="Contoh: Yogyakarta">
+    <button id="btnCari">Cari</button>
+
+    <hr>
+
+    Cuaca : <p id="lokasi"></p>
+    <div id="tampilan"></div>
+    
+
+    <script>
+        function getCuaca(kota) {
+            const urlapi = `https://api.weatherapi.com/v1/current.json?key=99173acfa44b4d4e95e65649250710&q=${kota}&aqi=no`;
+
+            $.ajax({
+                url: urlapi,
+                method: "GET",
+                success: function(data){
+                    console.log(data);
+
+                    const v = document.getElementById("tampilan");
+                    const l = document.getElementById("lokasi");
+
+                    // Ambil data dari API
+                    let nama = data.location.name;
+                    let negara = data.location.country;
+                    let provinsi = data.location.region;
+                    let kecamatan = data.location.tz_id; // gunakan tz_id sebagai kecamatan
+                    let lon = data.location.lon;
+                    let lat = data.location.lat;
+                    let cuaca = data.current.condition.text;
+                    let suhuC = data.current.temp_c;
+                    let suhuF = data.current.temp_f;
+                    let kelembapan = data.current.humidity;
+                    let icon = data.current.condition.icon;
+
+                    // Tampilkan hasil
+                    l.innerHTML = nama;
+                    v.innerHTML = `
+                        
+                        <p><b>Suhu (°C):</b> ${suhuC}°C</p>
+                        <p><b>Suhu (°F):</b> ${suhuF}°F</p>
+                        <p><b>Kelembapan:</b> ${kelembapan}%</p>
+                      
+                        <p><b>Negara:</b> ${negara}</p>
+                        <p><b>Provinsi:</b> ${provinsi}</p>
+                        <p><b>Kecamatan:</b> ${kecamatan}</p>
+                        <p><b>Longitude:</b> ${lon}</p>
+                        <p><b>Latitude:</b> ${lat}</p>
+                        <img src="${icon}" alt="ikon cuaca">
+                    `;
+                },
+                error: function(error){
+                    console.log(error);
+                    document.getElementById("tampilan").innerHTML = `<p>❌ Kota tidak ditemukan.</p>`;
+                }
+            });
+        }
+
+        // Jalankan default untuk Yogyakarta saat pertama kali dibuka
+        getCuaca("Yogyakarta");
+
+        // Event tombol cari
+        $("#btnCari").click(function(){
+            let kota = $("#inputKota").val().trim();
+            if (kota === "") {
+                alert("Masukkan nama kota terlebih dahulu!");
+                return;
+            }
+            getCuaca(kota);
+        });
+    </script>
+</body>
+</html>
