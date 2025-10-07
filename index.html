@@ -69,4 +69,18 @@
             });
         }
 
-       
+        // Jalankan default untuk Yogyakarta saat pertama kali dibuka
+        getCuaca("Yogyakarta");
+
+        // Event tombol cari
+        $("#btnCari").click(function(){
+            let kota = $("#inputKota").val().trim();
+            if (kota === "") {
+                alert("Masukkan nama kota terlebih dahulu!");
+                return;
+            }
+            getCuaca(kota);
+        });
+    </script>
+</body>
+</html>
