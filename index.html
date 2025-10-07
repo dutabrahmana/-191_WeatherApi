@@ -15,3 +15,15 @@
     <label>Masukkan Nama Kota: </label>
     <input type="text" id="inputKota" placeholder="Contoh: Yogyakarta">
     <button id="btnCari">Cari</button>
+
+    <hr>
+
+    Cuaca : <p id="lokasi"></p>
+    <div id="tampilan"></div>
+    
+
+    <script>
+        function getCuaca(kota) {
+            const urlapi = `https://api.weatherapi.com/v1/current.json?key=99173acfa44b4d4e95e65649250710&q=${kota}&aqi=no`;
+
+         
