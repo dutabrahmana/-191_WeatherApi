@@ -26,4 +26,27 @@
         function getCuaca(kota) {
             const urlapi = `https://api.weatherapi.com/v1/current.json?key=99173acfa44b4d4e95e65649250710&q=${kota}&aqi=no`;
 
-         
+            $.ajax({
+                url: urlapi,
+                method: "GET",
+                success: function(data){
+                    console.log(data);
+
+                    const v = document.getElementById("tampilan");
+                    const l = document.getElementById("lokasi");
+
+                    let nama = data.location.name;
+                    let negara = data.location.country;
+                    let provinsi = data.location.region;
+                    let kecamatan = data.location.tz_id; // gunakan tz_id sebagai kecamatan
+                    let lon = data.location.lon;
+                    let lat = data.location.lat;
+                    let cuaca = data.current.condition.text;
+                    let suhuC = data.current.temp_c;
+                    let suhuF = data.current.temp_f;
+                    let kelembapan = data.current.humidity;
+                    let icon = data.current.condition.icon;
+
+                    l.innerHTML = nama;
+                    v.innerHTML = `
+                    
